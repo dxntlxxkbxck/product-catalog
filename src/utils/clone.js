@@ -1,11 +1,21 @@
-const deepClone = (Obj) => {
-    if (obj === null || typeof obj !== 'object') return obj;
-    if (Array.isArray(obj)) return obj.map(deepClone);
-    const clone = {};
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            clone[key] = deepClone(obj[key]);
-        }
-    }
-    return clone;
+export const deepClone = (obj) => {
+	try {
+		return JSON.parse(JSON.stringify(obj));
+	} catch (e) {
+		// Fallback для сложных объектов
+		if (obj === null || typeof obj !== 'object') {
+			return obj;
+		}
+		if (Array.isArray(obj)) {
+			return obj.map(deepClone);
+		}
+		const clone = {};
+		Object.keys(obj).forEach(key => {
+			clone[key] = deepClone(obj[key]);
+		});
+		return clone;
+	}
 };
+
+const cloneCatalog = (catalog) => deepClone(catalog);
+export default cloneCatalog;

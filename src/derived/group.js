@@ -7,6 +7,6 @@ export default (catalog) => {
         const cat = product.category ? product.category.main : 'uncategorized';
         if (!groups[cat]) groups[cat] = [];
     groups[cat].push(deepClone(product));
-    }
+        }
     return groups;
 };
